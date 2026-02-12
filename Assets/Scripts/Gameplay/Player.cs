@@ -76,6 +76,6 @@ public class Player : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        isGrounded = false;
+        //isGrounded = false;
     }
 }
