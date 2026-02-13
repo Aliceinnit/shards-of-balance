@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Player : MonoBehaviour
 {
     public float movementSpeed = 3f;
-    public float jumpSpeed = 50f;
+    public float jumpSpeed = 500f;
     private bool isGrounded = true;
     private Rigidbody2D rb;
 
@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     private const float groundedGravity = 2.1f;
     private const float airGravity = 2.1f;
-    private const float fastFallGravity = 4.1f;
+    private const float fastFallGravity = 2.1f;
 
     void Start()
     {
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 
         if (jumpRequested && isGrounded)
         {
-            rb.AddForce(Vector2.up * jumpSpeed);
+            rb.AddForce(Vector2.up * jumpSpeed * 10);
             isGrounded = false;
         }
 
@@ -76,9 +76,6 @@ public class Player : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        // optionally clear grounded when leaving a collider
-        // (OnCollisionEnter2D already checks normals on landing)
-        // You can uncomment if you see the player stuck grounded accidentally.
-        // isGrounded = false;
+        //isGrounded = false;
     }
 }
