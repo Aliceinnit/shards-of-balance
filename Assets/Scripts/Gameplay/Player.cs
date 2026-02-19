@@ -8,8 +8,9 @@ public class Player : MonoBehaviour
     public float jumpSpeed = 500f;
     private bool isGrounded = true;
     private Rigidbody2D rb;
+    public StarManager sm;
 
-   
+
     private float horizontalInput;
     private bool jumpRequested;
     private bool fastFallRequested;
@@ -77,5 +78,13 @@ public class Player : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         //isGrounded = false;
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("star"))
+        {
+            Destroy(other.gameObject);
+            sm.StarCount++;
+        }
     }
 }
