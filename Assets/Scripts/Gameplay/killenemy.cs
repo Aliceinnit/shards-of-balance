@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class killenemy : MonoBehaviour
 {
-    public GameObject player;
     public Transform respawnpoint;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -16,11 +15,12 @@ public class killenemy : MonoBehaviour
         
     }
     
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("Player"))
+
+        if(other.CompareTag("Player"))
         {
-            player.transform.position = respawnpoint.position;
+            other.transform.position = respawnpoint.position;
         }
     }
 }
