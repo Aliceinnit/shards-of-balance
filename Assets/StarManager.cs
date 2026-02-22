@@ -1,17 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StarManager : MonoBehaviour
 {
-    public int StarCount; 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public int StarCount;
+    public Text StarText;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        StarText.text = StarCount.ToString();
     }
 }
