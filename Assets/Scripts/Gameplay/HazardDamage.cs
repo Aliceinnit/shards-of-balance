@@ -1,11 +1,15 @@
 using UnityEngine;
 
-public class Killenemy : MonoBehaviour
+public class HazardDamage : MonoBehaviour
 {
-     public int damage = 1;
-
+    
+    public int damage = 1;
+    
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
+
+        Debug.Log($"{name} TRIGGERED by: {other.name} (root: {other.transform.root.name})");
         var ph = other.GetComponentInParent<PlayerHealth>();
         if (ph == null) return;
 
