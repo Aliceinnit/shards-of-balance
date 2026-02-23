@@ -4,7 +4,7 @@ using System.Collections;
 
 public class ObstacleTrigger : MonoBehaviour
 {
-    public GameObject dialogueBox;      // Själva rutan (panel)
+    public GameObject dialogueBox;      // Sjï¿½lva rutan (panel)
     public TextMeshProUGUI textComponent;
     public string[] lines;
     public float textSpeed = 0.05f;
@@ -15,22 +15,21 @@ public class ObstacleTrigger : MonoBehaviour
     void Start()
     {
         textComponent.text = "";
-        dialogueBox.SetActive(false); // Börjar gömd
+        dialogueBox.SetActive(false); // Bï¿½rjar gï¿½md
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+   private void OnTriggerEnter2D(Collider2D other)
+{
+    // Dialogue
+    dialogueBox.SetActive(true);
+    if (index < lines.Length)
     {
-        if (other.CompareTag("Player"))
-        {
-            dialogueBox.SetActive(true);
-
-            if (index < lines.Length)
-            {
-                StartCoroutine(TypeLine(lines[index]));
-                index++;
-            }
-        }
+        StartCoroutine(TypeLine(lines[index]));
+        index++;
     }
+
+
+}
 
     IEnumerator TypeLine(string line)
     {
