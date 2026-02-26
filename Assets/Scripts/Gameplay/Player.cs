@@ -10,7 +10,6 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     public StarManager sm;
 
-
     private float horizontalInput;
     private bool jumpRequested;
     private bool fastFallRequested;
@@ -37,6 +36,15 @@ public class Player : MonoBehaviour
         }
 
         fastFallRequested = Input.GetKey(KeyCode.S);
+
+        // Footsteps while walking on ground
+        if (AudioManager.Instance != null)
+        {
+            if (horizontalInput != 0 && isGrounded)
+                AudioManager.Instance.StartFootsteps();
+            else
+                AudioManager.Instance.StopFootsteps();
+        }
     }
 
     private void FixedUpdate()
@@ -46,16 +54,15 @@ public class Player : MonoBehaviour
         rb.linearVelocity = vel;
 
         if (isGrounded)
-        {
             rb.gravityScale = groundedGravity;
-        }
         else
-        {
             rb.gravityScale = fastFallRequested ? fastFallGravity : airGravity;
-        }
 
         if (jumpRequested && isGrounded)
         {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.jump);
+
             rb.AddForce(Vector2.up * jumpSpeed * 10);
             isGrounded = false;
         }
@@ -79,10 +86,14 @@ public class Player : MonoBehaviour
     {
         //isGrounded = false;
     }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("star"))
         {
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.wallTouch);
+
             Destroy(other.gameObject);
             sm.StarCount++;
         }
