@@ -6,12 +6,16 @@ public class PlayerHealth : MonoBehaviour
     public bool livesEnabled = false; 
     public int maxHealth = 2;
     public int health;
+    public GameObject deathCamera;
+    public GameObject HeartsCount;
 
     public Transform currentRespawnPoint; // will change as player progresses
 
     public UnityAction OnLivesEnabled;
 
     private Rigidbody2D rb;
+
+    private bool tutorialCompleted = false;
 
     public UnityAction OnDied;
 
@@ -63,10 +67,17 @@ public class PlayerHealth : MonoBehaviour
 
         if (health <= 0)
         {
-            OnDied?.Invoke(); 
+            OnDied?.Invoke();
 
-            RespawnAt(currentRespawnPoint);
-            health = maxHealth;
+            // FIRST death during tutorial → wait for dialog
+            if (!tutorialCompleted)
+            {
+                tutorialCompleted = true;
+                return; // STOP here, don't respawn yet
+            }
+
+            // After tutorial → normal death
+            Invoke("OnDeath", 0.5f);
         }
     }
 
@@ -87,6 +98,26 @@ public class PlayerHealth : MonoBehaviour
         {
             transform.position = point.position;
         }
-}
+    }
 
+    private void OnDeath()
+    {
+        if (tutorialCompleted)
+        {
+            GameObject playerCamera = GameObject.Find("Main Camera");
+            GameObject player = GameObject.Find("bruh");
+            Player playerMovements = player.GetComponent<Player>();
+            playerMovements.enabled = false;
+            playerCamera.SetActive(false);
+            HeartsCount.SetActive(false);
+            deathCamera.SetActive(true);
+        }
+    }
+
+    public void RespawnNow()
+    {
+        RespawnAt(currentRespawnPoint);
+        Time.timeScale = 1f;
+        health = maxHealth;
+    }
 }

@@ -38,7 +38,7 @@ public class TutorialText : MonoBehaviour
     {
         //playerMovements.enabled = false;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             if (textComponent.text == lines[index])
             {
