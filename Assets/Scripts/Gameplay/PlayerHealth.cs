@@ -19,7 +19,7 @@ public class PlayerHealth : MonoBehaviour
 
     public UnityAction OnDied;
 
-    public float damageCooldown = 0.6f; // NEW: seconds
+    public float damageCooldown = 0.6f; 
     private float nextDamageTime = 0f;
 
     void Awake()
@@ -92,7 +92,7 @@ public class PlayerHealth : MonoBehaviour
             rb.linearVelocity = Vector2.zero;   // use velocity
             rb.angularVelocity = 0f;
 
-            rb.position = target;         // teleport safely
+            rb.position = target;         // teleport 
         }
         else
         {
