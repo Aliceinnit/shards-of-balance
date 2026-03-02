@@ -8,7 +8,8 @@ public class Killenemy : MonoBehaviour
     {
         var ph = other.GetComponentInParent<PlayerHealth>();
         if (ph == null) return;
-
+        
+        Debug.Log("trigger");
         // Before tutorial: just respawn
         if (!ph.livesEnabled)
         {

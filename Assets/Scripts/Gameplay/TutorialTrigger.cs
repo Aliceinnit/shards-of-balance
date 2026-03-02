@@ -4,7 +4,7 @@ public class TutorialTrigger : MonoBehaviour
 {
     [Header("Tutorial Setup")]
     public Transform tutorialRespawnPoint;
-    public GameObject plantToDisable; // drag the plant ROOT or the hurtbox object here
+    public GameObject plantToDisable; 
     public GameObject dialogBoxToEnable;
 
     private bool triggeredOnce = false;
@@ -32,17 +32,14 @@ public class TutorialTrigger : MonoBehaviour
         subscribedPH.OnDied -= HandlePlayerDied;
         subscribedPH.OnDied += HandlePlayerDied;
 
-        // NEW: disable only the collider (prevents push/glitch from re-entering)
+        // disable only the collider
         var col = GetComponent<Collider2D>();
         if (col != null) col.enabled = false;
 
-        // Optional: also hide/remove the trigger object
-        // gameObject.SetActive(false);
     }
 
     private void OnDisable()
     {
-        // NEW: safety cleanup if object gets disabled/destroyed
         if (subscribedPH != null)
             subscribedPH.OnDied -= HandlePlayerDied;
     }
