@@ -10,10 +10,13 @@ public class Dialogue : MonoBehaviour
 
     private int index;
 
+    private GameObject player;
     private Player playerMovements;
     void Start()
     {
-        playerMovements = GameObject.Find("bruh").GetComponent<Player>();
+        player = GameObject.Find("bruh");
+        Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
+        playerMovements = player.GetComponent<Player>();
 
         if (textComponent == null)
         {
@@ -28,7 +31,7 @@ public class Dialogue : MonoBehaviour
             enabled = false;
             return;
         }
-
+        rb.linearVelocity = Vector2.zero;
         textComponent.text = string.Empty;
         StartDialogue();
     }
@@ -38,7 +41,7 @@ public class Dialogue : MonoBehaviour
     {
         playerMovements.enabled = false;
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             if (textComponent.text == lines[index])
             {

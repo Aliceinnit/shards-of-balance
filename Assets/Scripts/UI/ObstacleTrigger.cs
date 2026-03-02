@@ -4,18 +4,17 @@ using System.Collections;
 
 public class ObstacleTrigger : MonoBehaviour
 {
-    public GameObject dialogueBox;      // Sj�lva rutan (panel)
+    public GameObject dialogueBox;
     public TextMeshProUGUI textComponent;
     public string[] lines;
     public float textSpeed = 0.05f;
 
     private int index = 0;
-    private bool isTyping = false;
 
     void Start()
     {
         textComponent.text = "";
-        dialogueBox.SetActive(false); // B�rjar g�md
+        dialogueBox.SetActive(false);
     }
 
    private void OnTriggerEnter2D(Collider2D other)
@@ -33,8 +32,6 @@ public class ObstacleTrigger : MonoBehaviour
 
     IEnumerator TypeLine(string line)
     {
-        isTyping = true;
-
         textComponent.text = string.Empty;
 
         foreach (char c in line)
@@ -42,7 +39,5 @@ public class ObstacleTrigger : MonoBehaviour
             textComponent.text += c;
             yield return new WaitForSeconds(textSpeed);
         }
-
-        isTyping = false;
     }
 }

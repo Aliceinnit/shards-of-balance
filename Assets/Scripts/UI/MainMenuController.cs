@@ -3,9 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
+    public string nextLevelSceneName;
     public void PlayGame()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene(nextLevelSceneName);
     }
 
     public void QuitGame()

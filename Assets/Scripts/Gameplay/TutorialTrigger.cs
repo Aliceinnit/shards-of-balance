@@ -5,6 +5,7 @@ public class TutorialTrigger : MonoBehaviour
     [Header("Tutorial Setup")]
     public Transform tutorialRespawnPoint;
     public GameObject plantToDisable; // drag the plant ROOT or the hurtbox object here
+    public GameObject dialogBoxToEnable;
 
     private bool triggeredOnce = false;
     private PlayerHealth subscribedPH;
@@ -51,7 +52,9 @@ public class TutorialTrigger : MonoBehaviour
         if (subscribedPH != null)
             subscribedPH.OnDied -= HandlePlayerDied;
 
+        dialogBoxToEnable.SetActive(true);
+
         if (plantToDisable != null)
-            Destroy(plantToDisable); 
+        Destroy(plantToDisable); 
     }
 }
