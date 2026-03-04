@@ -9,7 +9,6 @@ public class HazardDamage : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-        Debug.Log($"{name} TRIGGERED by: {other.name} (root: {other.transform.root.name})");
         var ph = other.GetComponentInParent<PlayerHealth>();
         if (ph == null) return;
 
@@ -22,5 +21,8 @@ public class HazardDamage : MonoBehaviour
 
         // After tutorial: remove hearts
         ph.TakeDamage(damage);
+
+        Player playerMovements = other.GetComponent<Player>();
+        playerMovements.ApplyKnockback(transform.position);
     }
 }
