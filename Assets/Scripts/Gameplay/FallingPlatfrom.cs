@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class FallingPlatfrom : MonoBehaviour
+public class FallingPlatform : MonoBehaviour
 {
     float fallwait = 2f;
     float destroywait = 1f;
@@ -14,7 +14,7 @@ public class FallingPlatfrom : MonoBehaviour
         
     }
 
-    private void onCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if(!isFalling && collision.gameObject.CompareTag("Player"))
         {

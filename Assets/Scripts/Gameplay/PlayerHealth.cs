@@ -1,57 +1,75 @@
 using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public bool livesEnabled = false; 
+    public bool livesEnabled = false;     // set true when tutorial is completed
     public int maxHealth = 2;
     public int health;
+
+    public Transform currentRespawnPoint; // gets updated as player progresses
+
     public GameObject deathCamera;
-    public GameObject HeartsCount;
 
-    public Transform currentRespawnPoint; // will change as player progresses
-
-    public UnityAction OnLivesEnabled;
-
-    private Rigidbody2D rb;
-
-    private bool tutorialCompleted = false;
-
-    public UnityAction OnDied;
-
-    public float damageCooldown = 0.6f; 
+    public float damageCooldown = 0.6f;
     private float nextDamageTime = 0f;
 
-    void Awake()
+    public float respawnInvulnTime = 0.25f;
+    public bool invulnerable { get; private set; }
+
+    public UnityAction OnLivesEnabled;
+    public UnityAction OnDied;
+
+    private Rigidbody2D rb;
+    private Collider2D col;
+    private Player playerMovement;
+
+    // Tutorial special case: first death after lives become enabled
+    private bool tutorialFirstDeathHandled = false;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
+        playerMovement = GetComponent<Player>();
     }
 
-    void Start()
+    private void Start()
     {
-       health = maxHealth;
+        health = maxHealth;
 
-        // safety fallback so respawn is never null
         if (currentRespawnPoint == null)
             currentRespawnPoint = transform;
     }
 
-   public void SetRespawnPoint(Transform newPoint)
+    // Called this when tutorial ends 
+    public void EnableLivesSystem()
+    {
+        livesEnabled = true;
+        health = maxHealth;
+
+        tutorialFirstDeathHandled = false;
+
+        OnLivesEnabled?.Invoke();
+    }
+
+    public void SetRespawnPoint(Transform newPoint)
     {
         if (newPoint != null)
             currentRespawnPoint = newPoint;
     }
 
-    // Use this BEFORE tutorial (gaps/plants just send you back)
+    // before tutorial: gaps/plants just send you back
     public void RespawnOnly()
     {
-        RespawnAt(currentRespawnPoint);
+        if (invulnerable) return;
+        StartCoroutine(RespawnRoutine(currentRespawnPoint));
     }
 
-    // Use this AFTER tutorial (plants/gaps remove hearts)
+    // after tutorial: hazards remove hearts
     public void TakeDamage(int amount)
     {
-        // If tutorial not done yet, don't use lives—just respawn
         if (!livesEnabled)
         {
             RespawnOnly();
@@ -59,6 +77,7 @@ public class PlayerHealth : MonoBehaviour
         }
 
         if (amount <= 0) return;
+        if (invulnerable) return;
 
         if (Time.time < nextDamageTime) return;
         nextDamageTime = Time.time + damageCooldown;
@@ -69,55 +88,75 @@ public class PlayerHealth : MonoBehaviour
         {
             OnDied?.Invoke();
 
-            // FIRST death during tutorial → wait for dialog
-            if (!tutorialCompleted)
+            // first death during tutorial phase after enabling lives
+            if (!tutorialFirstDeathHandled)
             {
-                tutorialCompleted = true;
-                return; // STOP here, don't respawn yet
+                tutorialFirstDeathHandled = true;
+                return;
             }
 
-            // After tutorial → normal death
-            Invoke("OnDeath", 0.5f);
-        }
-    }
-
-    private void RespawnAt(Transform point)
-    {
-        if (point == null) return;
-
-        Vector2 target = point.position;
-
-        if (rb != null)
-        {
-            rb.linearVelocity = Vector2.zero;   // use velocity
-            rb.angularVelocity = 0f;
-
-            rb.position = target;         // teleport 
-        }
-        else
-        {
-            transform.position = point.position;
+            // After tutorial: normal death
+            OnDeath();
         }
     }
 
     private void OnDeath()
     {
-        if (tutorialCompleted)
-        {
-            GameObject playerCamera = GameObject.Find("Main Camera");
-            GameObject player = GameObject.Find("bruh");
-            Player playerMovements = player.GetComponent<Player>();
-            playerMovements.enabled = false;
-            playerCamera.SetActive(false);
-            HeartsCount.SetActive(false);
-            deathCamera.SetActive(true);
-        }
-    }
+        // Stop player controls
+        if (playerMovement != null)
+            playerMovement.enabled = false;
 
+        // Switch cameras (optional)
+        var mainCam = Camera.main;
+        if (mainCam != null)
+            mainCam.gameObject.SetActive(false);
+
+        if (deathCamera != null)
+            deathCamera.SetActive(true);
+    }
     public void RespawnNow()
     {
-        RespawnAt(currentRespawnPoint);
-        Time.timeScale = 1f;
+        // Restore health
         health = maxHealth;
+
+        // Restore player
+        if (playerMovement != null)
+            playerMovement.enabled = true;
+
+        var mainCam = Camera.main;
+        if (mainCam != null)
+            mainCam.gameObject.SetActive(true);
+
+        if (deathCamera != null)
+            deathCamera.SetActive(false);
+
+        // Teleport + invulnerability window
+        if (!gameObject.activeInHierarchy) return;
+        StartCoroutine(RespawnRoutine(currentRespawnPoint));
     }
+
+    private IEnumerator RespawnRoutine(Transform point)
+{
+    if (point == null) yield break;
+
+    invulnerable = true;
+
+    Vector2 target = (Vector2)point.position + Vector2.up * 0.2f;
+
+    // Reset physics
+    if (rb != null)
+    {
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+        rb.position = target;
+    }
+    else
+    {
+        transform.position = target;
+    }
+
+    yield return new WaitForSeconds(respawnInvulnTime);
+
+    invulnerable = false;
+}
 }

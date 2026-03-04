@@ -14,7 +14,7 @@ public class Dialogue : MonoBehaviour
     private Player playerMovements;
     void Start()
     {
-        player = GameObject.Find("bruh");
+        player = GameObject.Find("Player");
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         playerMovements = player.GetComponent<Player>();
 

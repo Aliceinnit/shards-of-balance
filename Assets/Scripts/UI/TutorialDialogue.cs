@@ -15,7 +15,7 @@ public class TutorialDialogue : MonoBehaviour
     private PlayerHealth playerHealth;
     void Start()
     {
-        player = GameObject.Find("bruh");
+        player = GameObject.Find("Player");
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         playerMovements = player.GetComponent<Player>();
         playerHealth = player.GetComponent<PlayerHealth>();
