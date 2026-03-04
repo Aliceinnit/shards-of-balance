@@ -26,7 +26,7 @@ public class Portal : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            if(starManager.StarCount >= 15)
+            if(starManager.StarCount >= 10)
             {
                 playerCamera.SetActive(false);
                 HeartsStarCount.SetActive(false);

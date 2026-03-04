@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float jumpForce = 500f;             
     private int jumpsUsed = 0;
     private const int maxJumps = 2;
+    public float knockbackForce = 10f;
 
     public float groundedGravity = 2.1f;
     public float airGravity = 2.1f;
@@ -144,4 +145,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void ApplyKnockback(Vector2 sourcePosition)
+    {
+        Vector2 direction = ((Vector2)transform.position - sourcePosition).normalized;
+
+        rb.linearVelocity = Vector2.zero; 
+        rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+    }
 }
