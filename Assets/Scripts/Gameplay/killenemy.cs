@@ -6,10 +6,11 @@ public class Killenemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log($"Killenemy TRIGGER: other={other.name}, tag={other.tag}, root={other.transform.root.name}");
+        if (!other.CompareTag("Player")) return;
         var ph = other.GetComponentInParent<PlayerHealth>();
         if (ph == null) return;
         
-        Debug.Log("trigger");
         // Before tutorial: just respawn
         if (!ph.livesEnabled)
         {

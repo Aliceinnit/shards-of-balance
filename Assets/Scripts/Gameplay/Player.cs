@@ -2,24 +2,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [Header("Movement")]
     public float movementSpeed = 3f;
 
-    [Header("Jump")]
-    public float jumpForce = 500f;              // force value (we multiply by 10f like your old code)
-    public bool doubleJumpUnlocked = false;     // tick TRUE in Level 2 (or set from a manager)
+    public float jumpForce = 500f;             
     private int jumpsUsed = 0;
+    private const int maxJumps = 2;
 
-    [Header("Gravity")]
     public float groundedGravity = 2.1f;
     public float airGravity = 2.1f;
     public float fastFallGravity = 2.1f;
 
-    [Header("Collectibles")]
     public StarManager sm;
 
-    [Header("Visuals")]
-    public Transform rigRoot;                   // assign your FLIP wrapper here (NOT the Player collider object)
+    public Transform rigRoot;                   
     public float animatorSpeed = 1f;
 
     private Rigidbody2D rb;
@@ -32,6 +27,7 @@ public class Player : MonoBehaviour
     private bool isGrounded = true;
     private int facing = 1; // 1 = right, -1 = left
 
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -80,14 +76,19 @@ public class Player : MonoBehaviour
         // gravity
         rb.gravityScale = isGrounded ? groundedGravity : (fastFallRequested ? fastFallGravity : airGravity);
 
-        // jump / double jump
-        int maxJumps = doubleJumpUnlocked ? 2 : 1;
-
         if (jumpRequested && jumpsUsed < maxJumps)
         {
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlaySFX(AudioManager.Instance.jump);
 
+            if (animator)
+            {
+                animator.ResetTrigger("Jump");
+                animator.SetTrigger("Jump");
+
+                //restart jump animation even if already playing
+                animator.Play("Armature|Ase-jump", 0, 0f);
+            }
             // make jump consistent
             vel = rb.linearVelocity;
             vel.y = 0f;
@@ -143,9 +144,4 @@ public class Player : MonoBehaviour
         }
     }
 
-    // Call this from LevelManager when Level 2 starts (optional)
-    public void UnlockDoubleJump()
-    {
-        doubleJumpUnlocked = true;
-    }
 }

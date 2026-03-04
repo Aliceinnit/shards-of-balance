@@ -10,7 +10,7 @@ public class NewText : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        playerPosition = GameObject.Find("bruh").transform;
+        playerPosition = GameObject.Find("Player").transform;
     }
 
     // Update is called once per frame
