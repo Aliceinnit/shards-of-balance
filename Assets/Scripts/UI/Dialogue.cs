@@ -12,11 +12,13 @@ public class Dialogue : MonoBehaviour
 
     private GameObject player;
     private Player playerMovements;
+    private Animator playerAnimations;
     void Start()
     {
         player = GameObject.Find("Player");
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         playerMovements = player.GetComponent<Player>();
+        playerAnimations = player.GetComponentInChildren<Animator>();
 
         if (textComponent == null)
         {
@@ -40,6 +42,7 @@ public class Dialogue : MonoBehaviour
     void Update()
     {
         playerMovements.enabled = false;
+        playerAnimations.enabled = false;
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
@@ -81,6 +84,7 @@ public class Dialogue : MonoBehaviour
         else
         {
             playerMovements.enabled = true;
+            playerAnimations.enabled = true;
             gameObject.SetActive(false);
         }
     }

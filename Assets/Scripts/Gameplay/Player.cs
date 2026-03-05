@@ -197,8 +197,7 @@ public class Player : MonoBehaviour
 
     public void ApplyKnockback(Vector2 sourcePosition)
     {
-        if (isDead) return;
-
+        Debug.Log("Applying knockback from source position: " + sourcePosition);
         Vector2 direction = ((Vector2)transform.position - sourcePosition).normalized;
 
         rb.linearVelocity = Vector2.zero;

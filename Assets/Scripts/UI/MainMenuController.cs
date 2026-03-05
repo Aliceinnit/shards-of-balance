@@ -6,6 +6,7 @@ public class MainMenuController : MonoBehaviour
     public string nextLevelSceneName;
     public void PlayGame()
     {
+        Debug.Log("start game");
         SceneManager.LoadScene(nextLevelSceneName);
     }
 

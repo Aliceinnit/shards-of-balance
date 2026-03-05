@@ -20,5 +20,6 @@ public class Killenemy : MonoBehaviour
 
         // After tutorial: remove hearts
         ph.TakeDamage(damage);
+        ph.RespawnOnly();
     }
 }
