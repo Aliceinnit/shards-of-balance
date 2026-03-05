@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 
@@ -43,7 +43,7 @@ public class PlayerHealth : MonoBehaviour
             currentRespawnPoint = transform;
     }
 
-    // Called this when tutorial ends 
+    // Called when tutorial ends
     public void EnableLivesSystem()
     {
         livesEnabled = true;
@@ -82,7 +82,15 @@ public class PlayerHealth : MonoBehaviour
         if (Time.time < nextDamageTime) return;
         nextDamageTime = Time.time + damageCooldown;
 
+        int oldHealth = health;
         health = Mathf.Clamp(health - amount, 0, maxHealth);
+
+        // ✅ Play sound ONLY if health actually decreased
+        if (health < oldHealth && AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopFootsteps();   // helps the hit/death sound be heard
+            AudioManager.Instance.PlayDeath();       // you chose to use the death clip for every hit
+        }
 
         if (health <= 0)
         {
@@ -114,6 +122,7 @@ public class PlayerHealth : MonoBehaviour
         if (deathCamera != null)
             deathCamera.SetActive(true);
     }
+
     public void RespawnNow()
     {
         // Restore health
@@ -136,27 +145,27 @@ public class PlayerHealth : MonoBehaviour
     }
 
     private IEnumerator RespawnRoutine(Transform point)
-{
-    if (point == null) yield break;
-
-    invulnerable = true;
-
-    Vector2 target = (Vector2)point.position + Vector2.up * 0.2f;
-
-    // Reset physics
-    if (rb != null)
     {
-        rb.linearVelocity = Vector2.zero;
-        rb.angularVelocity = 0f;
-        rb.position = target;
-    }
-    else
-    {
-        transform.position = target;
-    }
+        if (point == null) yield break;
 
-    yield return new WaitForSeconds(respawnInvulnTime);
+        invulnerable = true;
 
-    invulnerable = false;
-}
+        Vector2 target = (Vector2)point.position + Vector2.up * 0.2f;
+
+        // Reset physics
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
+            rb.position = target;
+        }
+        else
+        {
+            transform.position = target;
+        }
+
+        yield return new WaitForSeconds(respawnInvulnTime);
+
+        invulnerable = false;
+    }
 }

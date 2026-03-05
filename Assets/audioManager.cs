@@ -4,8 +4,10 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
 
+    [Header("Audio Sources")]
     [SerializeField] private AudioSource musicSource;
-    [SerializeField] private AudioSource SFXSource;
+    [SerializeField] private AudioSource sfxOneShotSource;
+    [SerializeField] private AudioSource sfxLoopSource;
 
     [Header("Music")]
     public AudioClip background;
@@ -13,7 +15,7 @@ public class AudioManager : MonoBehaviour
     [Header("Sound Effects")]
     public AudioClip death;
     public AudioClip jump;
-    public AudioClip wallTouch;
+    public AudioClip wallTouch;   // you used this for pickup
     public AudioClip portalIn;
     public AudioClip portalOut;
     public AudioClip footsteps;
@@ -23,6 +25,7 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -33,46 +36,51 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        // background music always playing
         if (background != null && musicSource != null)
         {
             musicSource.clip = background;
             musicSource.loop = true;
-            musicSource.Play();
+            if (!musicSource.isPlaying)
+                musicSource.Play();
         }
     }
 
-    // one-shot sound effects (jump, star pickup, etc.)
-    public void PlaySFX(AudioClip clip)
+    // Generic one-shot
+    public void PlaySFX(AudioClip clip, float volume = 1f)
     {
-        if (clip != null && SFXSource != null)
-            SFXSource.PlayOneShot(clip);
+        if (clip == null || sfxOneShotSource == null) return;
+        sfxOneShotSource.PlayOneShot(clip, volume);
     }
 
-    // looped footsteps while walking
+    // Convenience wrappers
+    public void PlayDeath() => PlaySFX(death);
+    public void PlayJump() => PlaySFX(jump);
+    public void PlayPickup() => PlaySFX(wallTouch);
+    public void PlayPortalIn() => PlaySFX(portalIn);
+    public void PlayPortalOut() => PlaySFX(portalOut);
+
+    // Loop footsteps (separate source)
     public void StartFootsteps()
     {
-        if (SFXSource == null || footsteps == null) return;
+        if (sfxLoopSource == null || footsteps == null) return;
 
-        if (SFXSource.clip != footsteps)
-            SFXSource.clip = footsteps;
+        if (sfxLoopSource.clip != footsteps)
+            sfxLoopSource.clip = footsteps;
 
-        if (!SFXSource.isPlaying)
-        {
-            SFXSource.loop = true;
-            SFXSource.Play();
-        }
+        sfxLoopSource.loop = true;
+
+        if (!sfxLoopSource.isPlaying)
+            sfxLoopSource.Play();
     }
 
     public void StopFootsteps()
     {
-        if (SFXSource == null) return;
+        if (sfxLoopSource == null) return;
 
-        if (SFXSource.clip == footsteps)
-        {
-            SFXSource.Stop();
-            SFXSource.loop = false;
-            SFXSource.clip = null;
-        }
+        if (sfxLoopSource.clip == footsteps)
+            sfxLoopSource.Stop();
+
+        sfxLoopSource.loop = false;
+        sfxLoopSource.clip = null;
     }
 }
