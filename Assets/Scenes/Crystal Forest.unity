@@ -7877,12 +7877,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 460371039}
-  SFXSource: {fileID: 629929556}
+  sfxOneShotSource: {fileID: 629929556}
+  sfxLoopSource: {fileID: 629929556}
   background: {fileID: 8300000, guid: 0388a3460cc96db438c33c8e98a0377b, type: 3}
-  death: {fileID: 8300000, guid: 5fdb13d3756c84fecac96f5a2d124370, type: 3}
+  death: {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
   jump: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
   wallTouch: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
-  portalIn: {fileID: 0}
+  portalIn: {fileID: 8300000, guid: a235d590ef2a04d1b85b61ef4c21337c, type: 3}
   portalOut: {fileID: 0}
   footsteps: {fileID: 8300000, guid: 55f019f331e0039458aaf598400d0410, type: 3}
 --- !u!4 &533861551
