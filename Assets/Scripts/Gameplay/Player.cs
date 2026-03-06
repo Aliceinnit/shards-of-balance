@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -38,6 +40,16 @@ public class Player : MonoBehaviour
 
     private const string PortalInTag = "PortalIn";
 
+    private bool canDash = true;
+    private bool isDashing;
+    private float dashingPower = 24f;
+    private float dashingTime = 0.2f;
+    private float dasingCooldown = 1f;
+
+    [SerializeField] private TrailRenderer tr;
+
+    [SerializeField] private bool dashUnlocked = false;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -50,6 +62,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         if (isDead) return;
+        if (isDashing) return;
 
         // input
         horizontalInput = 0f;
@@ -76,11 +89,18 @@ public class Player : MonoBehaviour
             else
                 AudioManager.Instance.StopFootsteps();
         }
+
+        //Dash
+        if (dashUnlocked && Input.GetKeyDown(KeyCode.LeftShift) && canDash)
+        {
+            StartCoroutine(Dash());
+        }
     }
 
     private void FixedUpdate()
     {
         if (isDead) return;
+        if (isDashing) return;
 
         // horizontal move (Unity 6 uses linearVelocity)
         Vector2 vel = rb.linearVelocity;
@@ -224,4 +244,35 @@ public class Player : MonoBehaviour
             return false;
         }
     }
+
+    //Dash
+    private IEnumerator Dash()
+{
+    canDash = false;
+    isDashing = true;
+
+    if (animator != null) animator.SetBool("isDashing", true);
+
+    float originalGravity = rb.gravityScale;
+    rb.gravityScale = 0f;
+
+    rb.linearVelocity = new Vector2(facing * dashingPower, 0f);
+
+    if (tr != null) tr.emitting = true;
+
+    yield return new WaitForSeconds(dashingTime);
+
+    if (tr != null) tr.emitting = false;
+
+    rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
+    rb.gravityScale = originalGravity;
+    isDashing = false;
+
+    if (animator != null) animator.SetBool("isDashing", false);
+
+    yield return new WaitForSeconds(dasingCooldown);
+    canDash = true;
+}
+
 }
