@@ -12,12 +12,14 @@ public class TutorialDialogue : MonoBehaviour
 
     private GameObject player;
     private Player playerMovements;
+    private Animator playerAnimator;
     private PlayerHealth playerHealth;
     void Start()
     {
         player = GameObject.Find("Player");
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         playerMovements = player.GetComponent<Player>();
+        playerAnimator = player.GetComponentInChildren<Animator>();
         playerHealth = player.GetComponent<PlayerHealth>();
 
         if (textComponent == null)
@@ -42,6 +44,7 @@ public class TutorialDialogue : MonoBehaviour
     void Update()
     {
         playerMovements.enabled = false;
+        playerAnimator.enabled = false;
 
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
@@ -83,6 +86,7 @@ public class TutorialDialogue : MonoBehaviour
         else
         {
             playerMovements.enabled = true;
+            playerAnimator.enabled = true;
             gameObject.SetActive(false);
             playerHealth.RespawnNow();
         }

@@ -711,7 +711,6 @@ GameObject:
   - component: {fileID: 68732989}
   - component: {fileID: 68732988}
   - component: {fileID: 68732993}
-  - component: {fileID: 68732992}
   m_Layer: 10
   m_Name: plant-1
   m_TagString: Untagged
@@ -848,19 +847,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1207024730}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &68732992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 68732987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2639d36746eb3fc46a3004773af68c55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  knockbackForce: 10
 --- !u!50 &68732993
 Rigidbody2D:
   serializedVersion: 5
@@ -1211,7 +1197,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 4
   jumpForce: 250
-  knockbackForce: 10
+  knockbackForce: 300
+  knockbackUpForce: 50
   groundedGravity: 2.1
   airGravity: 2.1
   fastFallGravity: 2.1
@@ -28173,7 +28160,9 @@ MonoBehaviour:
   textComponent: {fileID: 1744423490}
   lines:
   - Oh no! You've lost all your lives...
-  - Since this is your first time dying you'll be given one more chance
+  - It's your first time dying so you'll get one more chance...
+  - Two lives have been given to you
+  - Use them sparingly...
   textSpeed: 0.02
 --- !u!114 &1738718844
 MonoBehaviour:
@@ -35459,6 +35448,7 @@ GameObject:
   - component: {fileID: 2136299957}
   - component: {fileID: 2136299956}
   - component: {fileID: 2136299962}
+  - component: {fileID: 2136299963}
   m_Layer: 0
   m_Name: death-plant
   m_TagString: Untagged
@@ -35660,6 +35650,24 @@ PlatformEffector2D:
   m_UseSideFriction: 0
   m_UseSideBounce: 0
   m_SideArc: 1
+--- !u!114 &2136299963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2136299955}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db4aba72f28f0440acb76c6db720c9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueBox: {fileID: 2070187169}
+  textComponent: {fileID: 541449990}
+  lines:
+  - You just lost a life... Try again!
+  - 
+  textSpeed: 0.02
 --- !u!1 &2140630384
 GameObject:
   m_ObjectHideFlags: 0

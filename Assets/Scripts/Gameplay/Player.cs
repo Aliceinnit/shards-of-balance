@@ -11,7 +11,8 @@ public class Player : MonoBehaviour
     private const int maxJumps = 2;
 
     [Header("Knockback")]
-    public float knockbackForce = 10f;
+    public float knockbackForce;
+    public float knockbackUpForce;
 
     [Header("Gravity")]
     public float groundedGravity = 2.1f;
@@ -195,13 +196,17 @@ public class Player : MonoBehaviour
         );
     }
 
-    public void ApplyKnockback(Vector2 sourcePosition)
+    public void ApplyKnockback()
     {
-        Debug.Log("Applying knockback from source position: " + sourcePosition);
-        Vector2 direction = ((Vector2)transform.position - sourcePosition).normalized;
+        float direction = Mathf.Sign(rb.linearVelocity.x);
+ 
+        if (direction == 0)
+        {
+            direction = -1;
+        }
 
         rb.linearVelocity = Vector2.zero;
-        rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(direction * knockbackForce, knockbackUpForce), ForceMode2D.Impulse);
     }
 
     // Prevents Console spam if the tag is missing.

@@ -23,6 +23,6 @@ public class HazardDamage : MonoBehaviour
         ph.TakeDamage(damage);
 
         Player playerMovements = other.GetComponent<Player>();
-        playerMovements.ApplyKnockback(transform.position);
+        playerMovements.ApplyKnockback();
     }
 }
