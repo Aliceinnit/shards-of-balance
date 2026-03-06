@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public bool livesEnabled = false;     // set true when tutorial is completed
+    public bool livesEnabled = false;     
     public int maxHealth = 2;
     public int health;
 
-    public Transform currentRespawnPoint; // gets updated as player progresses
+    public Transform currentRespawnPoint;
 
     public GameObject deathCamera;
 
@@ -25,7 +26,6 @@ public class PlayerHealth : MonoBehaviour
     private Collider2D col;
     private Player playerMovement;
 
-    // Tutorial special case: first death after lives become enabled
     private bool tutorialFirstDeathHandled = false;
 
     private void Awake()
@@ -33,6 +33,16 @@ public class PlayerHealth : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         playerMovement = GetComponent<Player>();
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Start()
@@ -43,7 +53,17 @@ public class PlayerHealth : MonoBehaviour
             currentRespawnPoint = transform;
     }
 
-    // Called when tutorial ends
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (livesEnabled)
+        {
+            health = maxHealth;
+        }
+
+        if (currentRespawnPoint == null)
+            currentRespawnPoint = transform;
+    }
+
     public void EnableLivesSystem()
     {
         livesEnabled = true;
@@ -60,14 +80,12 @@ public class PlayerHealth : MonoBehaviour
             currentRespawnPoint = newPoint;
     }
 
-    // before tutorial: gaps/plants just send you back
     public void RespawnOnly()
     {
         if (invulnerable) return;
         StartCoroutine(RespawnRoutine(currentRespawnPoint));
     }
 
-    // after tutorial: hazards remove hearts
     public void TakeDamage(int amount)
     {
         if (!livesEnabled)
@@ -85,36 +103,31 @@ public class PlayerHealth : MonoBehaviour
         int oldHealth = health;
         health = Mathf.Clamp(health - amount, 0, maxHealth);
 
-        // ✅ Play sound ONLY if health actually decreased
         if (health < oldHealth && AudioManager.Instance != null)
         {
-            AudioManager.Instance.StopFootsteps();   // helps the hit/death sound be heard
-            AudioManager.Instance.PlayDeath();       // you chose to use the death clip for every hit
+            AudioManager.Instance.StopFootsteps();
+            AudioManager.Instance.PlayDeath();
         }
 
         if (health <= 0)
         {
             OnDied?.Invoke();
 
-            // first death during tutorial phase after enabling lives
             if (!tutorialFirstDeathHandled)
             {
                 tutorialFirstDeathHandled = true;
                 return;
             }
 
-            // After tutorial: normal death
             OnDeath();
         }
     }
 
     private void OnDeath()
     {
-        // Stop player controls
         if (playerMovement != null)
             playerMovement.enabled = false;
 
-        // Switch cameras (optional)
         var mainCam = Camera.main;
         if (mainCam != null)
             mainCam.gameObject.SetActive(false);
@@ -125,10 +138,8 @@ public class PlayerHealth : MonoBehaviour
 
     public void RespawnNow()
     {
-        // Restore health
         health = maxHealth;
 
-        // Restore player
         if (playerMovement != null)
             playerMovement.enabled = true;
 
@@ -139,7 +150,6 @@ public class PlayerHealth : MonoBehaviour
         if (deathCamera != null)
             deathCamera.SetActive(false);
 
-        // Teleport + invulnerability window
         if (!gameObject.activeInHierarchy) return;
         StartCoroutine(RespawnRoutine(currentRespawnPoint));
     }
@@ -152,7 +162,6 @@ public class PlayerHealth : MonoBehaviour
 
         Vector2 target = (Vector2)point.position + Vector2.up * 0.2f;
 
-        // Reset physics
         if (rb != null)
         {
             rb.linearVelocity = Vector2.zero;
