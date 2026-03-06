@@ -15,19 +15,30 @@ public class HeartsUI : MonoBehaviour
             playerHealth = FindFirstObjectByType<PlayerHealth>();
 
         if (playerHealth == null)
+        {
             Debug.LogError("HeartsUI: Could not find PlayerHealth in scene.");
+            return;
+        }
+
+        UpdateHearts();
     }
 
     private void Update()
     {
         if (playerHealth == null) return;
+        UpdateHearts();
+    }
 
-        // Hide hearts before tutorial
+    private void UpdateHearts()
+    {
+        // Hide hearts before tutorial is finished
         if (!playerHealth.livesEnabled)
         {
             for (int i = 0; i < hearts.Length; i++)
-                if (hearts[i] != null) hearts[i].enabled = false;
-
+            {
+                if (hearts[i] != null)
+                    hearts[i].enabled = false;
+            }
             return;
         }
 
@@ -38,11 +49,13 @@ public class HeartsUI : MonoBehaviour
         {
             if (hearts[i] == null) continue;
 
-            bool slotUsed = i < maxHealth;
-            hearts[i].enabled = slotUsed;
+            // Show only as many heart slots as maxHealth
+            hearts[i].enabled = i < maxHealth;
 
-            if (slotUsed)
-                hearts[i].sprite = (i < health) ? fullHeart : emptyHeart;
+            if (i < maxHealth)
+            {
+                hearts[i].sprite = i < health ? fullHeart : emptyHeart;
+            }
         }
     }
 }

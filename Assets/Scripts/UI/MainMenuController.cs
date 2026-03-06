@@ -6,7 +6,8 @@ public class MainMenuController : MonoBehaviour
     public string nextLevelSceneName;
     public void PlayGame()
     {
-        Debug.Log("start game");
+        Debug.Log("Button clicked");
+        Debug.Log("Trying to load scene: " + nextLevelSceneName);
         SceneManager.LoadScene(nextLevelSceneName);
     }
 
