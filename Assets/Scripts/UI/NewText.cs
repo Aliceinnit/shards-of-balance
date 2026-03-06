@@ -7,6 +7,7 @@ public class NewText : MonoBehaviour
     public float activationXPosition;
     private Transform playerPosition;
     private bool hasActivated = false;
+    private Animator playerAnimator;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,6 +20,7 @@ public class NewText : MonoBehaviour
         if (!hasActivated && !oldText.activeSelf && playerPosition.position.x > activationXPosition)
         {
             hasActivated = true;
+            playerAnimator = GameObject.Find("Player").GetComponentInChildren<Animator>();
             newText.SetActive(true);
         }
     }
