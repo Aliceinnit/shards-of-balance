@@ -6,8 +6,23 @@ public class StarManager : MonoBehaviour
     public int StarCount;
     public Text StarText;
 
-    void Update()
+    private void Start()
     {
-        StarText.text = StarCount.ToString();
+        UpdateUI();
+    }
+
+    public void AddStar()
+    {
+        StarCount++;
+        UpdateUI();
+        Debug.Log("Star added. Count = " + StarCount);
+    }
+
+    public void UpdateUI()
+    {
+        if (StarText != null)
+        {
+            StarText.text = StarCount.ToString();
+        }
     }
 }
