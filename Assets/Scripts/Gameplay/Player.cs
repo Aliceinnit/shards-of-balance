@@ -172,19 +172,19 @@ public class Player : MonoBehaviour
     {
         if (isDead) return;
 
-        // Collectibles
         if (other.CompareTag("star"))
         {
             if (AudioManager.Instance != null)
                 AudioManager.Instance.PlayPickup();
 
-            Destroy(other.gameObject);
-
             if (sm != null)
-                sm.StarCount++;
+                sm.AddStar();
+            else
+                Debug.LogWarning("Player.sm is not assigned.");
+
+            Destroy(other.gameObject);
         }
 
-        // Portal in sound: SAFE tag check (no “tag not defined” spam)
         if (AudioManager.Instance != null && TagExists(PortalInTag) && other.CompareTag(PortalInTag))
         {
             AudioManager.Instance.PlayPortalIn();
