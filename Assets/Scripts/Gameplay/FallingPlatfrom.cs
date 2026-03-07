@@ -3,7 +3,7 @@ using System.Collections;
 
 public class FallingPlatform : MonoBehaviour
 {
-    float fallwait = 2f;
+    float fallwait = 1f;
     float destroywait = 1f;
 
     bool isFalling;

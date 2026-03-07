@@ -48,21 +48,19 @@ public class PlayerHealth : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
-
+        Debug.Log("Start health = " + health + ", livesEnabled = " + livesEnabled);
         if (currentRespawnPoint == null)
             currentRespawnPoint = transform;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (livesEnabled)
-        {
-            health = maxHealth;
-        }
+{
+    health = maxHealth;
+    Debug.Log("Scene load refill: " + health);
 
-        if (currentRespawnPoint == null)
-            currentRespawnPoint = transform;
-    }
+    if (currentRespawnPoint == null)
+        currentRespawnPoint = transform;
+}
 
     public void EnableLivesSystem()
     {

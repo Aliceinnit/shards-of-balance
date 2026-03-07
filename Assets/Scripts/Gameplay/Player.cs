@@ -118,9 +118,8 @@ public class Player : MonoBehaviour
 
             if (animator != null)
             {
-                animator.ResetTrigger("Jump");
-                animator.SetTrigger("Jump");
                 animator.Play("Armature|Ase-jump", 0, 0f);
+
             }
 
             // consistent jump
@@ -137,7 +136,7 @@ public class Player : MonoBehaviour
         jumpRequested = false;
     }
 
-    private void LateUpdate()
+   private void LateUpdate()
     {
         if (isDead) return;
         if (rigRoot == null) return;
@@ -147,8 +146,7 @@ public class Player : MonoBehaviour
 
         Vector3 s = rigRoot.localScale;
 
-        // Recommended 2D flip: X axis
-        s.x = Mathf.Abs(s.x) * facing;
+        s.z = Mathf.Abs(s.z) * facing;
 
         rigRoot.localScale = s;
     }
