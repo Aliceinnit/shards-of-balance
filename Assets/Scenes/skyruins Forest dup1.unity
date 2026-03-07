@@ -8914,7 +8914,7 @@ GameObject:
   - component: {fileID: 378904358}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: star
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8932,7 +8932,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   StarCount: 0
-  StarText: {fileID: 0}
+  StarText: {fileID: 698044502}
 --- !u!4 &378904359
 Transform:
   m_ObjectHideFlags: 0
@@ -14978,7 +14978,7 @@ MonoBehaviour:
   groundedGravity: 2.1
   airGravity: 2.1
   fastFallGravity: 2.1
-  sm: {fileID: 0}
+  sm: {fileID: 378904358}
   rigRoot: {fileID: 2029221805}
   animatorSpeed: 1
   tr: {fileID: 0}
