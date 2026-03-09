@@ -567,7 +567,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 100
-  jumpSpeed: 500
+  jumpForce: 500
+  knockbackForce: 0
+  knockbackUpForce: 0
+  groundedGravity: 2.1
+  airGravity: 2.1
+  fastFallGravity: 2.1
+  sm: {fileID: 0}
+  rigRoot: {fileID: 0}
+  animatorSpeed: 1
+  tr: {fileID: 0}
+  dashUnlocked: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

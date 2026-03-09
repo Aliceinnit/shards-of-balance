@@ -4,7 +4,7 @@ public class Killenemy : MonoBehaviour
 {
      public int damage = 1;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         Debug.Log($"Killenemy TRIGGER: other={other.name}, tag={other.tag}, root={other.transform.root.name}");
         if (!other.CompareTag("Player")) return;

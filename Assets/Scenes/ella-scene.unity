@@ -1205,6 +1205,8 @@ MonoBehaviour:
   sm: {fileID: 378904358}
   rigRoot: {fileID: 511805900}
   animatorSpeed: 1
+  tr: {fileID: 0}
+  dashUnlocked: 0
 --- !u!114 &131103540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7864,7 +7866,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   musicSource: {fileID: 460371039}
-  SFXSource: {fileID: 629929556}
+  sfxOneShotSource: {fileID: 0}
+  sfxLoopSource: {fileID: 0}
   background: {fileID: 8300000, guid: 0388a3460cc96db438c33c8e98a0377b, type: 3}
   death: {fileID: 8300000, guid: 5fdb13d3756c84fecac96f5a2d124370, type: 3}
   jump: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
@@ -7872,6 +7875,8 @@ MonoBehaviour:
   portalIn: {fileID: 0}
   portalOut: {fileID: 0}
   footsteps: {fileID: 8300000, guid: 55f019f331e0039458aaf598400d0410, type: 3}
+  defeatVillan: {fileID: 0}
+  winning: {fileID: 0}
 --- !u!4 &533861551
 Transform:
   m_ObjectHideFlags: 0

@@ -55,8 +55,15 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 {
-    health = maxHealth;
-    Debug.Log("Scene load refill: " + health);
+    if ( scene.name != "Crystal Forest")
+        {
+        health = maxHealth;
+        livesEnabled = true;
+        //Debug.LogWarning("Scene load refill: " + health + ", livesEnabled = " + livesEnabled + ", scene = " + scene.name);
+
+        }
+    else livesEnabled = false;
+
 
     if (currentRespawnPoint == null)
         currentRespawnPoint = transform;
