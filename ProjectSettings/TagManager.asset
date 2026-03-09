@@ -56,5 +56,8 @@ TagManager:
   - name: Player
     uniqueID: 303499857
     locked: 0
+  - name: eclipse
+    uniqueID: 827963461
+    locked: 0
   m_RenderingLayers:
   - Default
