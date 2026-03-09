@@ -16,14 +16,4 @@ public class MonsterChase : MonoBehaviour
             speed * Time.deltaTime
         );
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        Debug.Log("Monster collided with player!");
-        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            playerHealth.TakeDamage(2);
-        }
-    }
 }
