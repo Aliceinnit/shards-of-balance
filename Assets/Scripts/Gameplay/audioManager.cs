@@ -19,6 +19,9 @@ public class AudioManager : MonoBehaviour
     public AudioClip portalIn;
     public AudioClip portalOut;
     public AudioClip footsteps;
+    public AudioClip defeatVillan;
+    public AudioClip winning;
+
 
     private void Awake()
     {
