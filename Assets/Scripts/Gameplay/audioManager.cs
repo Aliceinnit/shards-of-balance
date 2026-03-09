@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
@@ -10,59 +11,85 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioSource sfxLoopSource;
 
     [Header("Music")]
-    public AudioClip background;
+    public AudioClip level1Music;
+    public AudioClip level2Music;
 
     [Header("Sound Effects")]
     public AudioClip death;
     public AudioClip jump;
-    public AudioClip wallTouch;   // you used this for pickup
+    public AudioClip wallTouch;
     public AudioClip portalIn;
     public AudioClip portalOut;
     public AudioClip footsteps;
     public AudioClip defeatVillan;
     public AudioClip winning;
 
-
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void Start()
     {
-        if (background != null && musicSource != null)
-        {
-            musicSource.clip = background;
-            musicSource.loop = true;
-            if (!musicSource.isPlaying)
-                musicSource.Play();
-        }
+        UpdateMusicForScene(SceneManager.GetActiveScene().name);
     }
 
-    // Generic one-shot
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        UpdateMusicForScene(scene.name);
+    }
+
+    private void UpdateMusicForScene(string sceneName)
+    {
+        if (musicSource == null) return;
+
+        AudioClip targetClip = null;
+
+        if (sceneName == "Crystal Forest")
+            targetClip = level1Music;
+        else if (sceneName == "Skyruins")
+            targetClip = level2Music;
+
+        if (targetClip == null) return;
+
+        if (musicSource.clip == targetClip && musicSource.isPlaying)
+            return;
+
+        musicSource.Stop();
+        musicSource.clip = targetClip;
+        musicSource.loop = true;
+        musicSource.Play();
+    }
+
     public void PlaySFX(AudioClip clip, float volume = 1f)
     {
         if (clip == null || sfxOneShotSource == null) return;
         sfxOneShotSource.PlayOneShot(clip, volume);
     }
 
-    // Convenience wrappers
     public void PlayDeath() => PlaySFX(death);
     public void PlayJump() => PlaySFX(jump);
     public void PlayPickup() => PlaySFX(wallTouch);
     public void PlayPortalIn() => PlaySFX(portalIn);
     public void PlayPortalOut() => PlaySFX(portalOut);
 
-    // Loop footsteps (separate source)
     public void StartFootsteps()
     {
         if (sfxLoopSource == null || footsteps == null) return;
