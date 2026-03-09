@@ -59,6 +59,7 @@ public class PlayerHealth : MonoBehaviour
         {
         health = maxHealth;
         livesEnabled = true;
+            tutorialFirstDeathHandled = true;
         //Debug.LogWarning("Scene load refill: " + health + ", livesEnabled = " + livesEnabled + ", scene = " + scene.name);
 
         }

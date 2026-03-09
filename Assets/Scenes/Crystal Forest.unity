@@ -7626,7 +7626,7 @@ BoxCollider2D:
   m_UsedByEffector: 1
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 20.964561, y: -1.8911424}
+  m_Offset: {x: 20.946533, y: -1.8911424}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -7636,7 +7636,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 6.2029724, y: 1.084589}
+  m_Size: {x: 5.958664, y: 1.084589}
   m_EdgeRadius: 0
 --- !u!251 &513861767
 PlatformEffector2D:
@@ -7868,13 +7868,16 @@ MonoBehaviour:
   musicSource: {fileID: 460371039}
   sfxOneShotSource: {fileID: 629929556}
   sfxLoopSource: {fileID: 629929556}
-  background: {fileID: 8300000, guid: 0388a3460cc96db438c33c8e98a0377b, type: 3}
+  level1Music: {fileID: 8300000, guid: 6bd4fbbc54d9ac744aa3d2a18e5ec45e, type: 3}
+  level2Music: {fileID: 8300000, guid: 1f85445b395ec7643a9fa9ec05068a0a, type: 3}
   death: {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
   jump: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
   wallTouch: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
   portalIn: {fileID: 8300000, guid: a235d590ef2a04d1b85b61ef4c21337c, type: 3}
   portalOut: {fileID: 0}
   footsteps: {fileID: 8300000, guid: 55f019f331e0039458aaf598400d0410, type: 3}
+  defeatVillan: {fileID: 0}
+  winning: {fileID: 0}
 --- !u!4 &533861551
 Transform:
   m_ObjectHideFlags: 0
