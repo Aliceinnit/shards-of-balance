@@ -27212,7 +27212,8 @@ MonoBehaviour:
   musicSource: {fileID: 168149683}
   sfxOneShotSource: {fileID: 130925747}
   sfxLoopSource: {fileID: 130925747}
-  background: {fileID: 8300000, guid: 672ea49bc1426964fa194d97c63800ab, type: 3}
+  level1Music: {fileID: 8300000, guid: 6bd4fbbc54d9ac744aa3d2a18e5ec45e, type: 3}
+  level2Music: {fileID: 8300000, guid: 1f85445b395ec7643a9fa9ec05068a0a, type: 3}
   death: {fileID: 8300000, guid: cabfae866cab347928b74b7d0ca6bfa9, type: 3}
   jump: {fileID: 8300000, guid: fe0b1f9aeb45b41b089175aeeabd5d95, type: 3}
   wallTouch: {fileID: 8300000, guid: 19f89c6e740e7447f9e12a8310d3e973, type: 3}
