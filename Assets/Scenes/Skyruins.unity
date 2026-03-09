@@ -3632,7 +3632,7 @@ GameObject:
   - component: {fileID: 290954327}
   - component: {fileID: 290954326}
   m_Layer: 0
-  m_Name: Player (1)
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3671,8 +3671,8 @@ MonoBehaviour:
   emptyHeart: {fileID: 21300002, guid: fed24bd82cefc0c4a8ef64dab6231b53, type: 3}
   fullHeart: {fileID: 21300000, guid: fed24bd82cefc0c4a8ef64dab6231b53, type: 3}
   hearts:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1544732457}
+  - {fileID: 1981539330}
 --- !u!114 &290954327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12223,7 +12223,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8a8d71b074ca094b8f76202cf9ef68f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 290954325}
   speed: 2
 --- !u!1 &1165978729
 GameObject:
@@ -15497,7 +15497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a543ad26f97f9464da98b6070bb9d7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 290954325}
   monster: {fileID: 846755941}
   cameraSpeed: 2
 --- !u!114 &1527051760
@@ -16044,8 +16044,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterCamera: {fileID: 1527051762}
-  playerCamera: {fileID: 0}
-  player: {fileID: 0}
+  playerCamera: {fileID: 680701763}
+  player: {fileID: 290954325}
   monsterCamSpeed: 2
 --- !u!1 &1558575006
 GameObject:

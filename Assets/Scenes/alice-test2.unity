@@ -7635,13 +7635,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 3
   jumpForce: 500
-  doubleJumpUnlocked: 0
+  knockbackForce: 0
+  knockbackUpForce: 0
   groundedGravity: 2.1
   airGravity: 2.1
   fastFallGravity: 2.1
   sm: {fileID: 0}
   rigRoot: {fileID: 543450652541447671}
   animatorSpeed: 1
+  tr: {fileID: 0}
+  dashUnlocked: 0
 --- !u!114 &382761422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7658,7 +7661,9 @@ MonoBehaviour:
   maxHealth: 2
   health: 0
   currentRespawnPoint: {fileID: 0}
+  deathCamera: {fileID: 0}
   damageCooldown: 0.6
+  respawnInvulnTime: 0.25
 --- !u!70 &382761423
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -8895,6 +8900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialRespawnPoint: {fileID: 1382807536}
   plantToDisable: {fileID: 2106086138}
+  dialogBoxToEnable: {fileID: 0}
 --- !u!61 &467080549
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -22439,7 +22445,9 @@ MonoBehaviour:
   maxHealth: 2
   health: 0
   currentRespawnPoint: {fileID: 0}
+  deathCamera: {fileID: 0}
   damageCooldown: 0.6
+  respawnInvulnTime: 0.25
 --- !u!1 &1606412051
 GameObject:
   m_ObjectHideFlags: 0
