@@ -2,14 +2,13 @@ using UnityEngine;
 
 public class HazardDamage : MonoBehaviour
 {
-    
     public int damage = 1;
-    
-    
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
-        var ph = other.GetComponentInParent<PlayerHealth>();
+
+        PlayerHealth ph = other.GetComponentInParent<PlayerHealth>();
         if (ph == null) return;
 
         // Before tutorial: just respawn
@@ -22,7 +21,10 @@ public class HazardDamage : MonoBehaviour
         // After tutorial: remove hearts
         ph.TakeDamage(damage);
 
-        Player playerMovements = other.GetComponent<Player>();
-        playerMovements.ApplyKnockback();
+        Player playerMovement = other.GetComponentInParent<Player>();
+        if (playerMovement != null)
+        {
+            playerMovement.ApplyKnockback();
+        }
     }
 }
