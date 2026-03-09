@@ -13,12 +13,19 @@ public class Dialogue : MonoBehaviour
     private GameObject player;
     private Player playerMovements;
     private Animator playerAnimations;
+    
     void Start()
     {
-        player = GameObject.Find("Player");
+        player = GameObject.FindWithTag("Player");
         Rigidbody2D rb = player.GetComponent<Rigidbody2D>();
         playerMovements = player.GetComponent<Player>();
         playerAnimations = player.GetComponentInChildren<Animator>();
+
+        playerMovements.enabled = false;
+        playerAnimations.enabled = false;
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.StopFootsteps();
 
         if (textComponent == null)
         {
@@ -35,15 +42,14 @@ public class Dialogue : MonoBehaviour
         }
         rb.linearVelocity = Vector2.zero;
         textComponent.text = string.Empty;
+        Time.timeScale = 0f;
+
         StartDialogue();
     }
 
     // Update is called once per frame
     void Update()
     {
-        playerMovements.enabled = false;
-        playerAnimations.enabled = false;
-
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             if (textComponent.text == lines[index])
@@ -69,7 +75,7 @@ public class Dialogue : MonoBehaviour
         foreach (char c in lines[index].ToCharArray())
         {
             textComponent.text += c;
-            yield return new WaitForSeconds(textSpeed);
+            yield return new WaitForSecondsRealtime(textSpeed);
         }
     }
 
@@ -85,6 +91,7 @@ public class Dialogue : MonoBehaviour
         {
             playerMovements.enabled = true;
             playerAnimations.enabled = true;
+            Time.timeScale = 1f;
             gameObject.SetActive(false);
         }
     }
